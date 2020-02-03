@@ -1,7 +1,6 @@
 package util;
 
 import java.text.NumberFormat;
-import java.util.Locale;
 
 public class Tracking {
 	private int boom = 0;
@@ -41,7 +40,7 @@ public class Tracking {
 		return "Tracking ["
 					+ "boom=" + boom 
 					+ ", attempts=" + attempts 
-					+ ", totalCost=" + NumberFormat.getNumberInstance(Locale.US).format(totalCost) 
+					+ ", totalCost=" + NumberFormat.getIntegerInstance().format(totalCost) 
 					+ "]";
 	}
 	
