@@ -107,15 +107,19 @@ public class Probability {
 	}
 
 	public static double[] getSuccess() {
-		return success;
+		return success.clone();
+	}
+	
+	public static int[] getDrop() {
+		return drop.clone();
 	}
 
 	public static double[] getFail() {
-		return fail;
+		return fail.clone();
 	}
 
 	public static double[] getBoom() {
-		return boom;
+		return boom.clone();
 	}
 	
 }

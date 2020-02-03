@@ -7,7 +7,7 @@ public class Main {
 
 	public static void main(String[] args) {
 //		System.out.printf("%.7f",testProbability(0.99999));
-//		testUpgradeCost(10, 0, 20);
+		testUpgradeCost(10, 20, 23);
 		
 	}
 	
