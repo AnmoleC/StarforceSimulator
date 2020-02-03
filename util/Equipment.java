@@ -4,7 +4,6 @@ public class Equipment {
 	private int lvl;
 	private int star;
 	private int boomCost;
-	private long totalUpgradeCost;
 
 	public int upgradeCost(){
 		int result = -1;
@@ -61,21 +60,14 @@ public class Equipment {
 	public void setBoomCost(int boomCost) {
 		this.boomCost = boomCost;
 	}
-	
-	public long getTotalUpgradeCost(){
-		return totalUpgradeCost;
-	}
-	
-	public void setTotalUpgradeCost(long mesoCost){
-		totalUpgradeCost = mesoCost;
-	}
-	
-	public void addTotalUpgradeCost(long mesoCost){
-		totalUpgradeCost += mesoCost;
-	}
 
 	@Override
 	public String toString() {
-		return "Equipment [lvl=" + lvl + ", star=" + star + ", totalUpgradeCost=" + totalUpgradeCost + "]";
+		return "Equipment [" 
+					+ "lvl=" + lvl 
+					+ ", star=" + star 
+//					+", boomCost=" + boomCost 
+//					+", upgradeCost=" + upgradeCost() 
+				+ "]";
 	}
 }

@@ -2,12 +2,15 @@ package app;
 
 import util.Equipment;
 import util.Probability;
+import util.Tracking;
 
 public class Main {
 
 	public static void main(String[] args) {
 //		System.out.printf("%.7f",testProbability(0.99999));
-		testUpgradeCost(10, 20, 23);
+		
+		Tracking summary = testUpgradeCost(160, 20, 22);
+		System.out.println(summary);
 		
 	}
 	
@@ -22,12 +25,12 @@ public class Main {
 		return ((double)total)/trials;
 	}
 	
-	private static void testEquip(Equipment equip, int goal){
-		Probability.upgrade(equip, goal);
+	private static Tracking testEquip(Equipment equip, int goal){
+		return Probability.upgrade(equip, goal);
 	}
 	
-	@SuppressWarnings("unused")
-	private static void testUpgradeCost(int lvl, int star, int goal){
+//	@SuppressWarnings("unused")
+	private static Tracking testUpgradeCost(int lvl, int star, int goal){
 		//Setup Equip
 		Equipment equip = new Equipment();
 		equip.setLvl(lvl);
@@ -37,7 +40,7 @@ public class Main {
 		System.out.println(equip);
 		
 		//Simulate upgrade
-		testEquip(equip, goal);
+		return testEquip(equip, goal);
 		
 //		System.out.println("After");
 //		System.out.println(equip);

@@ -36,13 +36,16 @@ public class Probability {
 		return Math.random() < probability;
 	}
 	
-	public static void upgrade(Equipment equip, int goal){
+	public static Tracking upgrade(Equipment equip, int goal){
 		String outcome;
 		boolean result;
-
+		Tracking stats = new Tracking();
+		int roundCost;
 		while(equip.getStar() < goal && equip.getStar() < 25){
 			outcome = "";
-			equip.addTotalUpgradeCost(equip.upgradeCost());
+			stats.addAttempts();
+			roundCost = equip.upgradeCost();
+			stats.addTotalCost(roundCost);
 			result = roll(success[equip.getStar()]);
 
 			if (fails >= 2){
@@ -59,7 +62,7 @@ public class Probability {
 					result = roll(boom[equip.getStar()]);
 					if(result){
 						outcome += "BOOM";
-						equip.addTotalUpgradeCost(equip.getBoomCost());
+						stats.addBoom();
 						equip.setStar(12);
 						fails = 0;
 					}else{
@@ -74,8 +77,9 @@ public class Probability {
 					}
 				}
 			}
-			System.out.println(equip + " " + outcome);
+			System.out.printf("%-28s cost=%,12d %s\n", equip, roundCost, outcome);
 		}
+		return stats;
 	}
 	
 	public static void event51015(){
