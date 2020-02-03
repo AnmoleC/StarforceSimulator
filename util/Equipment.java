@@ -7,23 +7,25 @@ public class Equipment {
 	private long totalUpgradeCost;
 
 	public int upgradeCost(){
-		int result = -1;;
+		int result = -1;
+		int div=0;
+		
 		if(			star>=0 && star<=9){
 			result = 1000 + (((int)Math.round(Math.pow(lvl, 3)))*(star+1)/25);
 
-		}else if( 	star>=10 && star<=14){
-			result = 1000 + ((int)Math.round(Math.pow(lvl, 3)))*((int)Math.round(Math.pow(star + 1, 2.7)/400));
-		
-		}else if( 	star>=15 && star<=17){
-			result = 1000 + ((int)Math.round(Math.pow(lvl, 3)))*((int)Math.round(Math.pow(star + 1, 2.7)/120));
-		}else if( 	star>=18 && star<=19){
-		
-			result = 1000 + ((int)Math.round(Math.pow(lvl, 3)))*((int)Math.round(Math.pow(star + 1, 2.7)/110));
-		
-		}else if( 	star>=20 && star<=24){
-			result = 1000 + ((int)Math.round(Math.pow(lvl, 3)))*((int)Math.round(Math.pow(star + 1, 2.7)/100));
+		}else {			
+			if(star>=10 && star<=14){
+				div = 400;
+			}else if( star>=15 && star<=17){
+				div=120;
+			}else if( star>=18 && star<=19){
+				div=110;
+			}else if( star>=20 && star<=24){
+				div=100;
+			}
+			result = 1000 + ((int)Math.round(Math.pow(lvl, 3)))*((int)Math.round(Math.pow(star + 1, 2.7)/div));
+			
 		}
-//		System.out.println("UPGRADE:"+result);
 		return result;
 	}
 

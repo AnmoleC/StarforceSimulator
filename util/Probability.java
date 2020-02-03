@@ -7,6 +7,12 @@ public class Probability {
 										0.30, 0.30, 0.30, 0.30, 0.30, 
 										0.30, 0.30, 0.03, 0.02, 0.01};
 
+	private static int[] drop = {	0, 0, 0, 0, 0,
+									0, 0, 0, 0, 0, 
+									0, 1, 1, 1, 1,
+									0, 1, 1, 1, 1,
+									0, 1, 1, 1, 1};
+
 	private static double[] fail = {	0.05, 0.10, 0.15, 0.15, 0.20,
 										0.25, 0.30, 0.35, 0.40, 0.45, 
 										0.50, 0.55, 0.60, 0.65, 0.70,
@@ -20,7 +26,8 @@ public class Probability {
 										0.10, 0.10, 0.20, 0.30, 0.40};
 
 	private static boolean eventDiscount = false;
-	private static boolean payRemoveBoom = false;
+	private static boolean safeguard = false;
+	private static int fails = 0;
 		
 	public static boolean roll (double probability){
 		if (probability == 0.0) return false;
@@ -30,24 +37,44 @@ public class Probability {
 	}
 	
 	public static void upgrade(Equipment equip, int goal){
+		String outcome;
 		boolean result;
+
 		while(equip.getStar() < goal && equip.getStar() < 25){
+			outcome = "";
 			equip.addTotalUpgradeCost(equip.upgradeCost());
 			result = roll(success[equip.getStar()]);
-			if(result){
-				//Success
+
+			if (fails >= 2){
+				outcome += "Chance";
+				fails = 0;
 				equip.addStar(1);
+				result = false;
 			}else{
-				result = roll(boom[equip.getStar()]);
 				if(result){
-					//Boom
-					System.out.println("Boomed");
-					equip.addTotalUpgradeCost(equip.getBoomCost());
-					equip.setStar(12);
+					outcome += "Pass";
+					equip.addStar(1);
+					fails = 0;
+				}else{
+					result = roll(boom[equip.getStar()]);
+					if(result){
+						outcome += "BOOM";
+						equip.addTotalUpgradeCost(equip.getBoomCost());
+						equip.setStar(12);
+						fails = 0;
+					}else{
+						if(drop[equip.getStar()] == 1){
+							outcome += "Fail (Drop)";
+							fails++;
+							equip.addStar(-1);
+						}else{
+							outcome += "Fail (Maintain)";
+							fails = 0;
+						}
+					}
 				}
-				//Fail (Keep)
 			}
-			System.out.println(equip);
+			System.out.println(equip + " " + outcome);
 		}
 	}
 	
@@ -71,12 +98,12 @@ public class Probability {
 		Probability.eventDiscount = eventDiscount;
 	}
 
-	public static boolean isPayRemoveBoom() {
-		return payRemoveBoom;
+	public static boolean isSafeguard() {
+		return safeguard;
 	}
 
-	public static void setPayRemoveBoom(boolean payRemoveBoom) {
-		Probability.payRemoveBoom = payRemoveBoom;
+	public static void setSafeguard(boolean safeguard) {
+		Probability.safeguard = safeguard;
 	}
 
 	public static double[] getSuccess() {
